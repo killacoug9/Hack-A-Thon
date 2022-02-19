@@ -15,7 +15,12 @@
 
 #define SCK_VERSION 0x0202 // version 2
 
-#define PORT 80;
+#define SERVER_IP_ADDRESS "10.219.207.40"
+#define PORT 49417
+
+#define MAX_USERS 5
+
+#define IS_SERVER 1
 
 using namespace std;
 

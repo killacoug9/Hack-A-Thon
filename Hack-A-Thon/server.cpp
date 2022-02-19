@@ -17,13 +17,13 @@ int run_server() {
 
 	ConSock = socket(AF_INET, SOCK_STREAM, NULL);
 
-	address.sin_addr.s_addr = inet_addr("127.0.0.1"); // ???
+	address.sin_addr.s_addr = inet_addr(SERVER_IP_ADDRESS); 
 	address.sin_family = AF_INET;
-	address.sin_port = htons(10102);
+	address.sin_port = htons(PORT);
 
 	ListenSock = socket(AF_INET, SOCK_STREAM, NULL);
 	bind(ListenSock, (SOCKADDR*)&address, sizeof(address));
-	listen(ListenSock, SOMAXCONN);
+	listen(ListenSock, MAX_USERS); // Was 
 
 	cout << "Server waiting for conections";
 
