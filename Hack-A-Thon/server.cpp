@@ -11,9 +11,9 @@ int run_server() {
 	char MESSAGE[200];
 
 	WSAData WSD;
-	WORD D11Version;
-	D11Version = MAKEWORD(2, 1);
-	ok = WSAStartup(D11Version, &WSD);
+	WORD DllVersion;
+	DllVersion = MAKEWORD(2, 1);
+	ok = WSAStartup(DllVersion, &WSD);
 
 	ConSock = socket(AF_INET, SOCK_STREAM, NULL);
 
