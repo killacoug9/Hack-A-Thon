@@ -12,8 +12,16 @@ int run_server() {
 	
 
 	// Creates the sockets for connecting and listing 
-	SOCKET ConSock = socket(AF_INET, SOCK_STREAM, NULL);;
-	SOCKET ListenSock = socket(AF_INET, SOCK_STREAM, NULL);;
+	SOCKET ConSock = socket(AF_INET, SOCK_STREAM, NULL);
+	if (ConSock < 0) {
+		cout << "Failed to create Con socket" << endl;
+		return -1;
+	}
+	SOCKET ListenSock = socket(AF_INET, SOCK_STREAM, NULL);
+	if (ListenSock < 0) {
+		cout << "Failed to create Listen socket" << endl;
+		return -1;
+	}
 	SOCKADDR_IN address;
 
 	int addrsize = sizeof(address);
@@ -35,6 +43,8 @@ int run_server() {
 	int person_one_ID;
 
 	cout << "Server waiting for conections" << endl;
+
+
 
 	while (true) {
 		if (ConSock = accept(ListenSock, (SOCKADDR*)&address, &addrsize)) { // he put = but should be == i think

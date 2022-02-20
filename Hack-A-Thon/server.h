@@ -1,7 +1,8 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 //#define SCK_VERSION2 0x0202 // version 2
 
-#pragma comment(lib, "ws2_32.lib");
+#pragma comment(lib, "ws2_32.lib")
+
 #include <iostream>
 #include <conio.h>
 #include <stdio.h>
@@ -12,6 +13,7 @@
 #include <string>
 
 #include <thread>
+#include "Computer.hpp"
 
 #define SCK_VERSION 0x0202 // version 2
 
@@ -20,7 +22,7 @@
 
 #define MAX_USERS 5
 
-#define IS_SERVER 0
+#define IS_SERVER 1
 
 using namespace std;
 
