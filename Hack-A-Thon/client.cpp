@@ -20,7 +20,7 @@ int run_client(void) {
 		
 	// Define Server Info
 	SOCKADDR_IN address;
-	ZeroMemory(&address, sizeof(address)); 
+	ZeroMemory(&address, sizeof(address));
 	address.sin_addr.s_addr = inet_addr(SERVER_IP_ADDRESS); //
 	address.sin_family = AF_INET;
 	address.sin_port = htons(PORT);
@@ -31,21 +31,32 @@ int run_client(void) {
 
 	connect(sock, (SOCKADDR*)&address, sizeof(address));
 
-	while (true) {
+	auto Recieve = [&sock, &MESSAGE]() {
+		while (true) {
+			recv(sock, MESSAGE, sizeof(MESSAGE), NULL);
+			string reply;
+			reply = MESSAGE;
+			cout << "Server says: " << reply << endl;
+		}
+	};
 
-		string msg;
-		cout << "Enter message: ";
-		cin >> msg;
-		const char* s = msg.c_str();
-		send(sock, s, 1024, NULL);
+	auto Send = [&sock]() {
+		while (true) {
+			string msg;
+			cout << "Enter message: ";
+			cin >> msg;
+			const char* s = msg.c_str();
+			send(sock, s, 1024, NULL);
+		}
+	};
 
-		recv(sock, MESSAGE, sizeof(MESSAGE), NULL);
-		string reply;
-		reply = MESSAGE;
-		cout << "Server says: " << reply << endl;
+	thread s(Send);
 
-	}
+	thread r(Recieve);
 
+	s.join();
+
+	r.join();
 	
 
 }
