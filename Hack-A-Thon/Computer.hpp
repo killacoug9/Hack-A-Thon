@@ -2,17 +2,16 @@
 class Computer {
 
 public:
-	Computer();
+	Computer(SOCKET soc);
 
 	Computer(const Computer& copy);
 
 	~Computer();
 
-	void set_socket(SOCKET soc);
+	int set_socket(SOCKET soc);
 
-	SOCKET get_socket(void);
+	SOCKET get_socket(void) const;
 
-	
 	void recieve_messages();
 
 private:

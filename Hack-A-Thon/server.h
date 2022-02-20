@@ -13,6 +13,7 @@
 #include <string>
 
 #include <thread>
+//std::thread thread_object(callable);
 #include "Computer.hpp"
 
 #define SCK_VERSION 0x0202 // version 2
@@ -29,3 +30,5 @@ using namespace std;
 int run_server(void);
 
 int run_client(void);
+
+void set_user_socket(Computer& client, SOCKET ListenSock, SOCKADDR_IN& address, int& addrsize);
