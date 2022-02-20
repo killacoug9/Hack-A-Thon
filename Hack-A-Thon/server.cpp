@@ -84,33 +84,54 @@ int run_server() {
 	
 	auto c1Recieve = [&client1, &client2]() {
 		while (true) {
-			char MESSAGE[200];
-			ZeroMemory(MESSAGE, 200);
-			recv(client1.get_socket(), MESSAGE, sizeof(MESSAGE), NULL);
+			char MESSAGE[4060];
+			ZeroMemory(MESSAGE, 4060);
+			int bytesRecieved = recv(client1.get_socket(), MESSAGE, 4060, 0);
 			string client_input_msg;
 			client_input_msg = MESSAGE;
 			cout << "User "  << client1.get_number() << " says:" << client_input_msg << endl;
 
+			/*client_input_msg = "User 1: " + *MESSAGE;
+			strcpy(MESSAGE, client_input_msg.c_str());*/
 
 			const char* s = client_input_msg.c_str();
-			send(client2.get_socket(), s, 1024, NULL);
+			//send(client2.get_socket(), "User 2: ", 4, 0);
+			send(client2.get_socket(), MESSAGE, bytesRecieved + 1, 0);
 		}
 	};
 
-
 	auto c2Recieve = [&client2, &client1]() {
 		while (true) {
-			char MESSAGE[200];
-			ZeroMemory(MESSAGE, 200);
-			recv(client2.get_socket(), MESSAGE, sizeof(MESSAGE), NULL);
+			char MESSAGE[4060];
+			ZeroMemory(MESSAGE, 4060);
+			int bytesRecieved = recv(client2.get_socket(), MESSAGE, 4060, 0);
 			string msg;
 			msg = MESSAGE;
 			cout << "User " << client2.get_number() << " says:" << msg << endl;
 
+			/*msg = "User 2: " + *MESSAGE;
+			strcpy(MESSAGE, msg.c_str());*/
+
 			const char* s = msg.c_str();
-			send(client1.get_socket(), s, 1024, NULL);
+			//send(client1.get_socket(), "User 1: ", 4, 0);
+			send(client1.get_socket(), MESSAGE, bytesRecieved + 1, 0);
 		}
 	};
+
+	//auto c1Recieve = [&client1, &client2]() {
+	//	while (true) {
+	//		char MESSAGE[200];
+	//		ZeroMemory(MESSAGE, 200);
+	//		recv(client1.get_socket(), MESSAGE, sizeof(MESSAGE), NULL);
+	//		string client_input_msg;
+	//		client_input_msg = MESSAGE;
+	//		cout << "User " << client1.get_number() << " says:" << client_input_msg << endl;
+
+
+	//		const char* s = client_input_msg.c_str();
+	//		send(client2.get_socket(), s, 1024, NULL);
+	//	}
+	//};
 
 	thread t3(c1Recieve);
 	thread t4(c2Recieve);

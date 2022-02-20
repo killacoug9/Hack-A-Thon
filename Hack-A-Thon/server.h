@@ -1,6 +1,6 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 //#define SCK_VERSION2 0x0202 // version 2
-
+#define _CRT_SECURE_NO_WARNINGS
 #pragma comment(lib, "ws2_32.lib")
 
 #include <iostream>
