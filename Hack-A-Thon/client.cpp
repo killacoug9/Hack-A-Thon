@@ -44,7 +44,7 @@ int run_client(void) {
 		while (true) {
 			string msg;
 			cout << "Enter message: ";
-			cin >> msg;
+			getline(cin, msg);
 			const char* s = msg.c_str();
 			send(sock, s, 1024, NULL);
 		}
