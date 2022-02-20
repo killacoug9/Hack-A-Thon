@@ -20,7 +20,7 @@
 
 #define MAX_USERS 5
 
-#define IS_SERVER 1
+#define IS_SERVER 0
 
 using namespace std;
 
