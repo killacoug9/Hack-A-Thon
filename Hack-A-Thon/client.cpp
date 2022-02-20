@@ -33,10 +33,13 @@ int run_client(void) {
 
 	auto Recieve = [&sock, &MESSAGE]() {
 		while (true) {
-			recv(sock, MESSAGE, sizeof(MESSAGE), NULL);
-			string reply;
-			reply = MESSAGE;
-			cout << "Server says: " << reply << endl;
+			if (recv(sock, MESSAGE, sizeof(MESSAGE), NULL) == 0) {
+				string reply;
+				reply = MESSAGE;
+				cout << reply << endl;
+			}
+			
+
 		}
 	};
 
