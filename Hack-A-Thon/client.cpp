@@ -34,12 +34,11 @@ int run_client(void) {
 	auto Recieve = [&sock, &MESSAGE]() {
 		while (true) {
 			if (recv(sock, MESSAGE, sizeof(MESSAGE), NULL) == 0) {
+				ZeroMemory(MESSAGE, 200);
 				string reply;
 				reply = MESSAGE;
 				cout << reply << endl;
 			}
-			
-
 		}
 	};
 

@@ -41,17 +41,13 @@ int run_server() {
 	listen(ListenSock, MAX_USERS);
 
 
-	char MESSAGE[200];
+	//char MESSAGE[200];
 
 
 	cout << "Server waiting for conections" << endl;
 
 	// listing socket is our socket, the socket for server. ConSoc is the clients socket. so we send to ConSoc
 
-
-	//thread t1(set_user_socket, (client1, ListenSock, &address, &addrsize));
-
-	//thread t2(set_user_socket, client2, ListenSock, &address, &addrsize);
 
 	auto f = [&client1, ListenSock, address, &addrsize]() {
 		int counter = 1;
@@ -75,6 +71,8 @@ int run_server() {
 			}
 		}
 	};
+
+
 	thread t2(f2);
 
 	t1.join();
@@ -84,8 +82,10 @@ int run_server() {
 	// multi threadign out of while loop?? use a recieve func??
 
 	
-	auto c1Recieve = [&client1, &MESSAGE, &client2]() {
+	auto c1Recieve = [&client1, &client2]() {
 		while (true) {
+			char MESSAGE[200];
+			ZeroMemory(MESSAGE, 200);
 			recv(client1.get_socket(), MESSAGE, sizeof(MESSAGE), NULL);
 			string client_input_msg;
 			client_input_msg = MESSAGE;
@@ -98,8 +98,9 @@ int run_server() {
 	};
 
 
-	auto c2Recieve = [&client2, &MESSAGE, &client1]() {
+	auto c2Recieve = [&client2, &client1]() {
 		while (true) {
+			char MESSAGE[200];
 			ZeroMemory(MESSAGE, 200);
 			recv(client2.get_socket(), MESSAGE, sizeof(MESSAGE), NULL);
 			string msg;
@@ -112,7 +113,7 @@ int run_server() {
 	};
 
 	thread t3(c1Recieve);
-	thread t4(c1Recieve);
+	thread t4(c2Recieve);
 
 	t3.join();
 	t4.join();
