@@ -41,7 +41,7 @@ int run_server() {
 	listen(ListenSock, MAX_USERS);
 
 
-	char MESSAGE[2000];
+	char MESSAGE[200];
 
 
 	cout << "Server waiting for conections" << endl;
@@ -100,6 +100,7 @@ int run_server() {
 
 	auto c2Recieve = [&client2, &MESSAGE, &client1]() {
 		while (true) {
+			ZeroMemory(MESSAGE, 200);
 			recv(client2.get_socket(), MESSAGE, sizeof(MESSAGE), NULL);
 			string msg;
 			msg = MESSAGE;
@@ -115,6 +116,7 @@ int run_server() {
 
 	t3.join();
 	t4.join();
+
 
 	return 0;
 }
