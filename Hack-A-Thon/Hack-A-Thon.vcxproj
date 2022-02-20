@@ -139,12 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="client.cpp" />
     <ClCompile Include="Computer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="button.hpp" />
     <ClInclude Include="Computer.hpp" />
     <ClInclude Include="server.h" />
   </ItemGroup>
