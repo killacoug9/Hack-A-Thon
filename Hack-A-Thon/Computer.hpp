@@ -8,8 +8,15 @@ public:
 
 	~Computer();
 
-private:
+	void set_socket(SOCKET soc);
 
+	SOCKET get_socket(void);
+
+	
+	void recieve_messages();
+
+private:
+	SOCKET socket;
 
 
 };

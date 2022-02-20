@@ -12,9 +12,9 @@ int run_server() {
 	
 
 	// Creates the sockets for connecting and listing 
-	SOCKET ConSock = socket(AF_INET, SOCK_STREAM, NULL);
-	if (ConSock < 0) {
-		cout << "Failed to create Con socket" << endl;
+	SOCKET person_one_soc = socket(AF_INET, SOCK_STREAM, NULL);
+	if (person_one_soc < 0) {
+		cout << "Failed to create person one socket" << endl;
 		return -1;
 	}
 	SOCKET ListenSock = socket(AF_INET, SOCK_STREAM, NULL);
@@ -22,6 +22,12 @@ int run_server() {
 		cout << "Failed to create Listen socket" << endl;
 		return -1;
 	}
+	SOCKET person_two_soc = socket(AF_INET, SOCK_STREAM, NULL);
+	if (person_two_soc < 0) {
+		cout << "Failed to create person 2 socket" << endl;
+		return -1;
+	}
+
 	SOCKADDR_IN address;
 
 	int addrsize = sizeof(address);
@@ -33,22 +39,27 @@ int run_server() {
 	address.sin_port = htons(PORT);
 
 
-	//ListenSock = socket(AF_INET, SOCK_STREAM, NULL);
-	bind(ListenSock, (SOCKADDR*)&address, sizeof(address));
-	listen(ListenSock, MAX_USERS); 
+	
+	bind(ListenSock, (SOCKADDR*)&address, sizeof(address)); // 
+	listen(ListenSock, MAX_USERS);
 
 
 	char MESSAGE[200];
 
-	int person_one_ID;
+	
 
 	cout << "Server waiting for conections" << endl;
+
+	// listing socket is our socket, the socket for server. ConSoc is the clients socket. so we send to ConSoc
 
 
 
 	while (true) {
-		if (ConSock = accept(ListenSock, (SOCKADDR*)&address, &addrsize)) { // he put = but should be == i think
-			recv(ConSock, MESSAGE, sizeof(MESSAGE), NULL);
+
+
+		// we would have multi threading here to recieve both sockets at same time
+		if (person_one_soc = accept(ListenSock, (SOCKADDR*)&address, &addrsize)) { // he put = but should be == i think
+			recv(person_one_soc, MESSAGE, sizeof(MESSAGE), NULL);
 			string msg;
 			msg = MESSAGE;
 			cout << "Client says: " << msg << endl;
@@ -57,8 +68,7 @@ int run_server() {
 			cout << "Enter reply: ";
 			cin >> reply;
 			const char* s = reply.c_str();
-			cout << "the ConSock print: " << ConSock << endl;
-			send(ConSock, s, 1024, NULL);
+			send(person_one_soc, s, 1024, NULL);
 
 
 		}
