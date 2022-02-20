@@ -13,9 +13,9 @@ int run_server() {
 	//// Creates the sockets for connecting and listing 
 
 
-	Computer client1(socket(AF_INET, SOCK_STREAM, NULL));
+	Computer client1(socket(AF_INET, SOCK_STREAM, NULL), 1);
 
-	Computer client2(socket(AF_INET, SOCK_STREAM, NULL));
+	Computer client2(socket(AF_INET, SOCK_STREAM, NULL), 2);
 
 	SOCKET ListenSock = socket(AF_INET, SOCK_STREAM, NULL);
 	if (ListenSock < 0) {
@@ -83,20 +83,38 @@ int run_server() {
 
 	// multi threadign out of while loop?? use a recieve func??
 
-	while (true) {
-		recv(client1.get_socket(), MESSAGE, sizeof(MESSAGE), NULL);
-		string msg;
-		msg = MESSAGE;
-		cout << "Client says: " << msg << endl;
-
-		string reply;
-		cout << "Enter reply: ";
-		getline(cin, reply);
-		const char* s = reply.c_str();
-		send(client1.get_socket(), s, 1024, NULL);
-	}
 	
+	auto c1Recieve = [&client1, &MESSAGE, &client2]() {
+		while (true) {
+			recv(client1.get_socket(), MESSAGE, sizeof(MESSAGE), NULL);
+			string client_input_msg;
+			client_input_msg = MESSAGE;
+			cout << "User "  << client1.get_number() << " says:" << client_input_msg << endl;
 
+
+			const char* s = client_input_msg.c_str();
+			send(client2.get_socket(), s, 1024, NULL);
+		}
+	};
+
+
+	auto c2Recieve = [&client2, &MESSAGE, &client1]() {
+		while (true) {
+			recv(client2.get_socket(), MESSAGE, sizeof(MESSAGE), NULL);
+			string msg;
+			msg = MESSAGE;
+			cout << "User " << client2.get_number() << " says:" << msg << endl;
+
+			const char* s = msg.c_str();
+			send(client1.get_socket(), s, 1024, NULL);
+		}
+	};
+
+	thread t3(c1Recieve);
+	thread t4(c1Recieve);
+
+	t3.join();
+	t4.join();
 
 	return 0;
 }

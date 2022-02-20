@@ -2,7 +2,7 @@
 class Computer {
 
 public:
-	Computer(SOCKET soc);
+	Computer(SOCKET soc, int n);
 
 	Computer(const Computer& copy);
 
@@ -14,9 +14,11 @@ public:
 
 	void recieve_messages();
 
+	int get_number(void);
+
 private:
 	SOCKET socket;
-
+	int number;
 
 };
 

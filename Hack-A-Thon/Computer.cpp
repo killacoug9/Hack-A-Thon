@@ -1,7 +1,8 @@
 #include "server.h"
 
-Computer::Computer(SOCKET soc) {
+Computer::Computer(SOCKET soc, int n) {
 	socket = soc;
+	number = n;
 }
 
 Computer::Computer(const Computer& copy) {
@@ -24,6 +25,10 @@ SOCKET Computer::get_socket(void) const{
 void Computer::recieve_messages() {
 
 
+}
+
+int Computer::get_number(void) {
+	return number;
 }
 
 void set_user_socket(Computer& client, SOCKET ListenSock, SOCKADDR_IN* address, int* addrsize) {
